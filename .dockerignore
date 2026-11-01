@@ -1,0 +1,7 @@
+.git
+_task.txt
+logs
+*.log
+*.example
+.env
+migrations
