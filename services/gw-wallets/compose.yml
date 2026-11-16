@@ -1,0 +1,59 @@
+services:
+  wallets:
+    build:
+      context: .
+      additional_contexts:
+        pkg: ../../pkg
+        proto: ../../proto
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./.env.prod:/.env:ro
+      - logs:/logs:rw # external
+    depends_on:
+      wallets_db:
+        condition: service_healthy
+      wallets_migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+      kafka: # external
+        condition: service_started
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  wallets_db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: wallets
+    volumes:
+      - pgdatawal:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d wallets"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  wallets_migrate:
+    image: kukymbr/goose-docker:latest
+    environment:
+      - GOOSE_DRIVER=postgres
+      - GOOSE_DBSTRING=host=wallets_db port=5432 user=postgres password=postgres dbname=wallets sslmode=disable
+      - GOOSE_VERBOSE=true
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      wallets_db:
+        condition: service_healthy
+
+volumes:
+  pgdatawal:
+  redis_data:

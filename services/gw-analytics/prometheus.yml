@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'gw-wallets'
+    static_configs:
+      - targets: [ 'wallets:8080' ]
+
+  - job_name: 'gw-exchanger'
+    static_configs:
+      - targets: [ 'exchanger:8081' ]
+
+  - job_name: 'gw-notification'
+    static_configs:
+      - targets: [ 'notification:8082' ]
+
+  - job_name: 'gw-analytics'
+    static_configs:
+      - targets: [ 'analytics:8083' ]

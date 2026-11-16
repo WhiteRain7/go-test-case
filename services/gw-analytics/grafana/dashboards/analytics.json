@@ -1,0 +1,833 @@
+{
+  "apiVersion": "dashboard.grafana.app/v2",
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "adxkc6n",
+    "namespace": "default",
+    "uid": "39c86fcf-088b-4008-a9c9-fc86789605eb",
+    "resourceVersion": "1794478582904009",
+    "generation": 11,
+    "creationTimestamp": "2026-11-11T14:04:58Z",
+    "labels": {
+      "grafana.app/deprecatedInternalID": "3826325751590912"
+    },
+    "annotations": {
+      "grafana.app/createdBy": "user:eg3z62fvpmsqof",
+      "grafana.app/saved-from-ui": "Grafana v13.3.1 (da3aa3ff57)",
+      "grafana.app/updatedBy": "user:eg3z62fvpmsqof",
+      "grafana.app/updatedTimestamp": "2026-11-12T10:16:22Z"
+    }
+  },
+  "spec": {
+    "annotations": [
+      {
+        "kind": "AnnotationQuery",
+        "spec": {
+          "query": {
+            "kind": "DataQuery",
+            "group": "grafana",
+            "version": "v0",
+            "datasource": {
+              "name": "-- Grafana --"
+            },
+            "spec": {}
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "builtIn": true
+        }
+      }
+    ],
+    "cursorSync": "Off",
+    "editable": true,
+    "elements": {
+      "panel-1": {
+        "kind": "Panel",
+        "spec": {
+          "id": 1,
+          "title": "Deposits and Withdraws",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-clickhouse-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "fg3zg31wri77kb"
+                      },
+                      "spec": {
+                        "builderOptions": {
+                          "aggregates": [
+                            {
+                              "aggregateType": "sum",
+                              "alias": "",
+                              "column": "amount"
+                            }
+                          ],
+                          "columns": [
+                            {
+                              "alias": "timestamp",
+                              "custom": false,
+                              "name": "timestamp",
+                              "type": "DateTime"
+                            },
+                            {
+                              "alias": "amount",
+                              "custom": false,
+                              "name": "amount",
+                              "type": "Float64"
+                            }
+                          ],
+                          "database": "analytics",
+                          "filters": [
+                            {
+                              "condition": "AND",
+                              "filterType": "custom",
+                              "hint": "filter_time",
+                              "key": "",
+                              "operator": "WITH IN DASHBOARD TIME RANGE",
+                              "type": "datetime"
+                            },
+                            {
+                              "condition": "AND",
+                              "filterType": "custom",
+                              "key": "operation",
+                              "label": "operation",
+                              "operator": "=",
+                              "type": "String",
+                              "value": "DEPOSIT"
+                            }
+                          ],
+                          "groupBy": [
+                            "operation",
+                            "currency"
+                          ],
+                          "limit": 1000,
+                          "meta": {
+                            "otelEnabled": false,
+                            "otelVersion": "latest"
+                          },
+                          "mode": "list",
+                          "orderBy": [
+                            {
+                              "default": true,
+                              "dir": "DESC",
+                              "hint": "filter_time",
+                              "name": ""
+                            },
+                            {
+                              "default": true,
+                              "dir": "DESC",
+                              "hint": "time",
+                              "name": ""
+                            }
+                          ],
+                          "queryType": "table",
+                          "table": "transfers"
+                        },
+                        "editorType": "builder",
+                        "format": 1,
+                        "minInterval": "1m",
+                        "pluginVersion": "4.23.5",
+                        "rawSql": "SELECT timestamp, amount FROM \"analytics\".\"transfers\" WHERE ( operation = 'DEPOSIT' ) LIMIT 1000"
+                      }
+                    },
+                    "refId": "DEPOSIT",
+                    "hidden": false
+                  }
+                },
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-clickhouse-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "fg3zg31wri77kb"
+                      },
+                      "spec": {
+                        "builderOptions": {
+                          "aggregates": [
+                            {
+                              "aggregateType": "sum",
+                              "alias": "",
+                              "column": "amount"
+                            }
+                          ],
+                          "columns": [
+                            {
+                              "alias": "timestamp",
+                              "custom": false,
+                              "name": "timestamp",
+                              "type": "DateTime"
+                            },
+                            {
+                              "alias": "amount",
+                              "custom": false,
+                              "name": "amount",
+                              "type": "Float64"
+                            }
+                          ],
+                          "database": "analytics",
+                          "filters": [
+                            {
+                              "condition": "AND",
+                              "filterType": "custom",
+                              "hint": "filter_time",
+                              "key": "",
+                              "operator": "WITH IN DASHBOARD TIME RANGE",
+                              "type": "datetime"
+                            },
+                            {
+                              "condition": "AND",
+                              "filterType": "custom",
+                              "key": "operation",
+                              "label": "operation",
+                              "operator": "=",
+                              "type": "String",
+                              "value": "WITHDRAW"
+                            }
+                          ],
+                          "groupBy": [
+                            "operation",
+                            "currency"
+                          ],
+                          "limit": 1000,
+                          "meta": {
+                            "otelEnabled": false,
+                            "otelVersion": "latest"
+                          },
+                          "mode": "list",
+                          "orderBy": [
+                            {
+                              "default": true,
+                              "dir": "DESC",
+                              "hint": "filter_time",
+                              "name": ""
+                            },
+                            {
+                              "default": true,
+                              "dir": "DESC",
+                              "hint": "time",
+                              "name": ""
+                            }
+                          ],
+                          "queryType": "table",
+                          "table": "transfers"
+                        },
+                        "editorType": "builder",
+                        "format": 1,
+                        "minInterval": "1m",
+                        "pluginVersion": "4.23.5",
+                        "rawSql": "SELECT timestamp, amount FROM \"analytics\".\"transfers\" WHERE ( operation = 'WITHDRAW' ) LIMIT 1000"
+                      }
+                    },
+                    "refId": "WITHDRAW",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.3.1",
+            "spec": {
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic",
+                    "seriesBy": "max"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.9,
+                    "drawStyle": "bars",
+                    "fillOpacity": 68,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "always",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "normal"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-2": {
+        "kind": "Panel",
+        "spec": {
+          "id": 2,
+          "title": "Distribution by currency",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-clickhouse-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "fg3zg31wri77kb"
+                      },
+                      "spec": {
+                        "builderOptions": {
+                          "aggregates": [
+                            {
+                              "aggregateType": "count",
+                              "column": "*"
+                            }
+                          ],
+                          "columns": [
+                            {
+                              "alias": "currency",
+                              "custom": false,
+                              "name": "currency",
+                              "type": "String"
+                            }
+                          ],
+                          "database": "analytics",
+                          "filters": [],
+                          "groupBy": [
+                            "currency"
+                          ],
+                          "limit": 1000,
+                          "meta": {},
+                          "mode": "aggregate",
+                          "orderBy": [],
+                          "queryType": "table",
+                          "table": "transfers"
+                        },
+                        "editorType": "builder",
+                        "format": 1,
+                        "minInterval": "1m",
+                        "pluginVersion": "4.23.5",
+                        "rawSql": "SELECT currency, count(*) FROM \"analytics\".\"transfers\" GROUP BY currency LIMIT 1000"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "piechart",
+            "version": "13.3.1",
+            "spec": {
+              "options": {
+                "displayLabels": [
+                  "percent"
+                ],
+                "legend": {
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic",
+                    "fixedColor": "#73BF69"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-3": {
+        "kind": "Panel",
+        "spec": {
+          "id": 3,
+          "title": "Distribution by operation type",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-clickhouse-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "fg3zg31wri77kb"
+                      },
+                      "spec": {
+                        "builderOptions": {
+                          "aggregates": [
+                            {
+                              "aggregateType": "count",
+                              "column": "*"
+                            }
+                          ],
+                          "columns": [
+                            {
+                              "alias": "operation",
+                              "custom": false,
+                              "name": "operation",
+                              "type": "String"
+                            }
+                          ],
+                          "database": "analytics",
+                          "filters": [],
+                          "groupBy": [
+                            "operation"
+                          ],
+                          "limit": 1000,
+                          "meta": {},
+                          "mode": "aggregate",
+                          "orderBy": [],
+                          "queryType": "table",
+                          "table": "transfers"
+                        },
+                        "editorType": "builder",
+                        "format": 1,
+                        "minInterval": "1m",
+                        "pluginVersion": "4.23.5",
+                        "rawSql": "SELECT operation, count(*) FROM \"analytics\".\"transfers\" GROUP BY operation LIMIT 1000"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "piechart",
+            "version": "13.3.1",
+            "spec": {
+              "options": {
+                "displayLabels": [
+                  "percent"
+                ],
+                "legend": {
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "pieType": "pie",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "percent",
+                  "color": {
+                    "mode": "palette-classic",
+                    "fixedColor": "#73BF69"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-4": {
+        "kind": "Panel",
+        "spec": {
+          "id": 4,
+          "title": "Overall balance by curreny",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-clickhouse-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "fg3zg31wri77kb"
+                      },
+                      "spec": {
+                        "builderOptions": {
+                          "aggregates": [
+                            {
+                              "aggregateType": "sum",
+                              "column": "amount"
+                            }
+                          ],
+                          "columns": [
+                            {
+                              "alias": "operation",
+                              "custom": false,
+                              "name": "operation",
+                              "type": "String"
+                            },
+                            {
+                              "alias": "currency",
+                              "custom": false,
+                              "name": "currency",
+                              "type": "String"
+                            },
+                            {
+                              "alias": "amount",
+                              "custom": false,
+                              "name": "amount",
+                              "type": "Float64"
+                            }
+                          ],
+                          "database": "analytics",
+                          "filters": [],
+                          "groupBy": [
+                            "currency"
+                          ],
+                          "limit": 1000,
+                          "meta": {},
+                          "mode": "aggregate",
+                          "orderBy": [],
+                          "queryType": "table",
+                          "table": "transfers"
+                        },
+                        "editorType": "sql",
+                        "format": 1,
+                        "meta": {
+                          "builderOptions": {
+                            "aggregates": [
+                              {
+                                "aggregateType": "sum",
+                                "column": "amount"
+                              }
+                            ],
+                            "columns": [
+                              {
+                                "alias": "operation",
+                                "custom": false,
+                                "name": "operation",
+                                "type": "String"
+                              },
+                              {
+                                "alias": "currency",
+                                "custom": false,
+                                "name": "currency",
+                                "type": "String"
+                              },
+                              {
+                                "alias": "amount",
+                                "custom": false,
+                                "name": "amount",
+                                "type": "Float64"
+                              }
+                            ],
+                            "database": "analytics",
+                            "filters": [],
+                            "groupBy": [
+                              "currency"
+                            ],
+                            "limit": 1000,
+                            "meta": {},
+                            "mode": "aggregate",
+                            "orderBy": [],
+                            "queryType": "table",
+                            "table": "transfers"
+                          }
+                        },
+                        "pluginVersion": "4.23.5",
+                        "queryType": "table",
+                        "rawSql": "SELECT currency, sum(CASE WHEN operation = 'DEPOSIT' THEN amount WHEN operation = 'WITHDRAW' THEN -amount END)\r\nFROM \"analytics\".\"transfers\"\r\nGROUP BY currency LIMIT 1000"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.3.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [],
+                  "fields": "",
+                  "values": true
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "red"
+                      },
+                      {
+                        "value": 0,
+                        "color": "yellow"
+                      },
+                      {
+                        "value": 10000,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "kind": "RowsLayout",
+      "spec": {
+        "rows": [
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "title": "New row 1",
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "maxColumnCount": 3,
+                  "columnWidthMode": "standard",
+                  "rowHeightMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-1"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-4"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "kind": "RowsLayoutRow",
+            "spec": {
+              "title": "New row",
+              "collapse": false,
+              "layout": {
+                "kind": "AutoGridLayout",
+                "spec": {
+                  "maxColumnCount": 3,
+                  "columnWidthMode": "standard",
+                  "rowHeightMode": "standard",
+                  "items": [
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-3"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "AutoGridLayoutItem",
+                      "spec": {
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-2"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "links": [],
+    "liveNow": false,
+    "preload": false,
+    "tags": [],
+    "timeSettings": {
+      "timezone": "browser",
+      "from": "now-6h",
+      "to": "now",
+      "autoRefresh": "",
+      "autoRefreshIntervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "hideTimepicker": false,
+      "fiscalYearStartMonth": 0
+    },
+    "title": "Analytics",
+    "variables": [],
+    "preferences": {
+      "layout": {
+        "kind": "AutoGridLayout",
+        "spec": {
+          "maxColumnCount": 3,
+          "columnWidthMode": "standard",
+          "rowHeightMode": "standard",
+          "items": []
+        }
+      }
+    }
+  }
+}

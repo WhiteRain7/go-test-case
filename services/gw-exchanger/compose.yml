@@ -1,0 +1,47 @@
+services:
+  exchanger:
+    build:
+      context: .
+      additional_contexts:
+        pkg: ../../pkg
+        proto: ../../proto
+    volumes:
+      - ./.env.prod:/.env:ro
+      - logs:/logs:rw # external
+    ports:
+      - "8081:8081" # prometheus
+    depends_on:
+      exchanger_db:
+        condition: service_healthy
+      exchanger_migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  exchanger_db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: currencies
+    volumes:
+      - pgdataxch:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d currencies"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  exchanger_migrate:
+    image: kukymbr/goose-docker:latest
+    environment:
+      - GOOSE_DRIVER=postgres
+      - GOOSE_DBSTRING=host=exchanger_db port=5432 user=postgres password=postgres dbname=currencies sslmode=disable
+      - GOOSE_VERBOSE=true
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      exchanger_db:
+        condition: service_healthy
+
+volumes:
+  pgdataxch:

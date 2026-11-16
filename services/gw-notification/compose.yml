@@ -1,0 +1,30 @@
+services:
+  notification:
+    build:
+      context: .
+      additional_contexts:
+        pkg: ../../pkg
+    volumes:
+      - ./.env.prod:/.env:ro
+      - logs:/logs:rw # external
+    ports:
+      - "8082:8082" # prometheus
+    depends_on:
+      kafka: # external
+        condition: service_started
+      notification_mongo:
+        condition: service_started
+    restart: unless-stopped
+
+  notification_mongo:
+    image: mongodb/mongodb-community-server:latest
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: main
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:

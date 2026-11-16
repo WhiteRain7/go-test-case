@@ -1,0 +1,7 @@
+.git
+.idea
+logs
+*.log
+*.example
+.env
+migrations
